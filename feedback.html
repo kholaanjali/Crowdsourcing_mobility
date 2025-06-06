@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ride Feedback</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container" style="max-width: 600px; margin-top: 50px;">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h3 class="text-center">How was your ride?</h3>
+            </div>
+            <div class="card-body">
+                <form action="/submit_feedback" method="post">
+                    <input type="hidden" name="driver_id" value="{{ request.args.get('driver_id') }}">
+
+                    <div class="mb-3">
+                        <label class="form-label">1. How was the ride?</label>
+                        <select name="rating" class="form-select" required>
+                            <option value="">Select rating</option>
+                            <option value="5">Excellent</option>
+                            <option value="4">Good</option>
+                            <option value="3">Average</option>
+                            <option value="2">Poor</option>
+                            <option value="1">Terrible</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">2. Was the route efficient?</label>
+                        <select name="efficiency" class="form-select" required>
+                            <option value="">Select option</option>
+                            <option value="yes">Yes</option>
+                            <option value="somewhat">Somewhat</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">3. Would you like to save energy by carpooling?</label>
+                        <select name="carpool" class="form-select" required>
+                            <option value="">Select option</option>
+                            <option value="definitely">Definitely</option>
+                            <option value="maybe">Maybe</option>
+                            <option value="no">Not interested</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">4. Did the route avoid traffic?</label>
+                        <select name="traffic" class="form-select" required>
+                            <option value="">Select option</option>
+                            <option value="yes">Yes, completely</option>
+                            <option value="somewhat">Somewhat</option>
+                            <option value="no">No, stuck in traffic</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">5. Would you recommend this service?</label>
+                        <select name="recommend" class="form-select" required>
+                            <option value="">Select option</option>
+                            <option value="definitely">Definitely</option>
+                            <option value="probably">Probably</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Submit Feedback</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Handle form submission
+        document.querySelector('form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Simple form validation
+            let isValid = true;
+            this.querySelectorAll('select[required]').forEach(select => {
+                if (!select.value) {
+                    select.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    select.classList.remove('is-invalid');
+                }
+            });
+
+            if (isValid) {
+                this.submit();
+            }
+        });
+    </script>
+</body>
+
+</html>
